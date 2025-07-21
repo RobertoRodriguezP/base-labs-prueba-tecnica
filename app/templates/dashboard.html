@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Reporte de Annie</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #7f8c8d;
+      padding-bottom: 5px;
+    }
+    .nav-group {
+      margin-bottom: 20px;
+    }
+    .nav-group button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      border: none;
+      background-color: #34495e;
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .nav-group button:hover {
+      background-color: #1abc9c;
+    }
+    .content {
+      flex-grow: 1;
+      padding: 30px;
+      background-color: #f4f4f4;
+    }
+    .chart-section {
+      display: none;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+  <h2>📋 Report</h2>
+  <div class="nav-group">
+    <button onclick="showChart('top_products_profit')">Top Products by Profit</button>
+    <button onclick="showChart('top_products_margin')">Top Products by Margin</button>
+    <button onclick="showChart('top_brands_profit')">Top Brands by Profit</button>
+    <button onclick="showChart('top_brands_margin')">Top Brands by Margin</button>
+    <button onclick="showChart('losing_products')">Losing Products</button>
+  </div>
+  <h2>📈 Analytics</h2>
+  <div class="nav-group">
+    <button onclick="showChart('inventory_by_brand')">Inventory by Brand</button>
+    <button onclick="showChart('monthly_spend_per_vendor')">Monthly Spend per Vendor</button>
+    <button onclick="showChart('price_vs_cost')">Price vs Cost</button>
+    <button onclick="showChart('vendor_purchase_diversity')">Vendor Purchase Diversity</button>
+  </div>
+  <button onclick="fetchData()">🔄 Refresh Data</button>
+</div>
+
+
+  <div class="content">
+    <div class="header">
+      <h1 id="chart-title">Dashboard</h1>
+    </div>
+
+    <div id="chart-container">
+      <div id="top_products_profit" class="chart-section"><canvas></canvas></div>
+      <div id="top_products_margin" class="chart-section"><canvas></canvas></div>
+      <div id="top_brands_profit" class="chart-section"><canvas></canvas></div>
+      <div id="top_brands_margin" class="chart-section"><canvas></canvas></div>
+      <div id="losing_products" class="chart-section"><canvas></canvas></div>
+      <div id="inventory_by_brand" class="chart-section"><canvas></canvas></div>
+      <div id="monthly_spend_per_vendor" class="chart-section"><canvas></canvas></div>
+      <div id="price_vs_cost" class="chart-section"><canvas></canvas></div>
+      <div id="vendor_purchase_diversity" class="chart-section"><canvas></canvas></div>
+    </div>
+  </div>
+
+  <script>
+    let chartInstances = {};
+    function showChart(id) {
+      document.querySelectorAll('.chart-section').forEach(el => el.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+      document.getElementById("chart-title").innerText = id.replace(/_/g, ' ').toUpperCase();
+    }
+
+    function renderChart(containerId, data) {
+      const container = document.getElementById(containerId);
+      const canvas = container.querySelector("canvas");
+      if (chartInstances[containerId]) {
+        chartInstances[containerId].destroy();
+      }
+      chartInstances[containerId] = new Chart(canvas, {
+        type: "bar",
+        data: {
+          labels: Object.keys(data),
+          datasets: [{
+            label: containerId.replace(/_/g, " ").toUpperCase(),
+            data: Object.values(data),
+            backgroundColor: "rgba(52, 152, 219, 0.7)"
+          }]
+        },
+        options: {
+          responsive: true,
+          indexAxis: "y",
+          scales: {
+            x: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    function fetchData() {
+      fetch("/static/dashboard_data.json?ts=" + new Date().getTime())
+        .then(res => res.json())
+        .then(data => {
+          Object.entries(data).forEach(([key, value]) => {
+            renderChart(key, value);
+          });
+          // Show default
+          showChart("top_products_profit");
+        });
+    }
+
+    window.onload = fetchData;
+  </script>
+</body>
+</html>

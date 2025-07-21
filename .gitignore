@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite DB files
+*.sqlite
+*.db
+
+# Environment variables
+.env
+
+# VS Code / IDE folders
+.vscode/
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Python virtual environment
+venv/
+env/
+
+# Logs and debug files
+*.log
+
+# Jupyter Notebooks Checkpoints (in case you used notebooks)
+.ipynb_checkpoints/
+
+# Static cache
+app/static/dashboard_data.json
+
+# Pytest cache
+.pytest_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+data/raw_csvs/*.csv
+data/raw_zips/*.zip
+*.tar
+*.gz
+*.sqlite
+*.db
