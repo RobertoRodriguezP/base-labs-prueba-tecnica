@@ -1,30 +1,21 @@
-# 📊 Annie's Liquor Dashboard
+# Annie’s Magic Numbers
 
-This project is a business intelligence dashboard for analyzing wholesale liquor sales. It helps answer key business questions like:
+An end-to-end data pipeline and dashboard project built for a data engineering challenge. The goal is to process raw procurement and sales data to deliver business insights for Annie, a wholesale liquor distributor.
 
-- 🥇 What are the top products and brands by profit and margin?
-- ❌ Which products or brands are losing money?
-- 📦 How much inventory is left by brand?
-- 💸 How much is spent monthly per vendor?
-- ⚖️ Are we pricing correctly vs purchase costs?
-- 🔀 How diverse are our purchases across vendors?
+## 📊 Features
 
----
+- Ingests and transforms purchase, sales, and inventory data
+- Generates key business metrics:
+  - Top 10 products and brands by profit and margin
+  - Products or brands losing money
+- Interactive dashboard using Flask + D3.js
+- Vendor and inventory analytics: purchase diversity, price vs cost, inventory value
+- Automated CSV download, unzip, transformation, and database storage (SQLite)
 
-## 🛠️ Features
-
-- Interactive dashboard built with **Flask** and **HTML/JS**
-- One-click refresh of all analytics
-- Data stored in **SQLite** for quick prototyping
-- Modular SQL views for reusability
-- Easy to extend with new visualizations
-
----
-
-## 🚀 Getting Started
+## 🚀 Quickstart
 
 ### 1. Clone the repo
 
 ```bash
 git clone https://github.com/RobertoRodriguezP/base-labs-prueba-tecnica.git
-cd annies-liquor-dashboard
+cd base-labs-prueba-tecnica
