@@ -20,7 +20,6 @@ An end-to-end data pipeline and dashboard project built for a data engineering c
 git clone https://github.com/RobertoRodriguezP/base-labs-prueba-tecnica.git
 cd base-labs-prueba-tecnica
 python run.py
-
+```
 ### 2. Video Explain
-```bash
-https://jam.dev/c/90a4ff25-5742-4b26-8665-da3cfa8f5354
+[![Watch the demo](assets/jam_preview.png)](https://jam.dev/c/90a4ff25-5742-4b26-8665-da3cfa8f5354)
